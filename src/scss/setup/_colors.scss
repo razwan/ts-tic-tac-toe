@@ -1,0 +1,36 @@
+
+:root {
+    --navy: #1a2a33;
+    --navy-light: #1f3641;
+    --navy-dark: #10212A;
+
+    --blue: #31C3BD;
+    --blue-dark: #118C87;
+    --blue-light: #65e9e4;
+    
+    --yellow: #f2b137;
+    --yellow-light: #ffc860;
+    --yellow-dark: #CC8B13;
+
+    --silver: #a8bfc9;
+    --silver-light: #dbe8ed;
+    
+    // yellow
+    --color-accent1: var(--yellow);
+    --color-accent1-light: var(--yellow-light);
+    --color-accent1-dark: var(--yellow-dark);
+
+    // blue
+    --color-accent2: var(--blue);
+    --color-accent2-light: var(--blue-light);
+    --color-accent2-dark: var(--blue-dark);
+
+    // navy
+    --color-bg: var(--navy);
+    --color-bg-light: var(--navy-light);
+    --color-bg-dark: var(--navy-dark);
+
+    // silver
+    --color-fg: var(--silver);
+    --color-fg-light: var(--silver-light);
+}

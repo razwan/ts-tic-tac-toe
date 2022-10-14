@@ -1,0 +1,39 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(20em/14);
+}
+
+.board__cell {
+    aspect-ratio: 1;
+
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        display: block;
+        width: 64px;
+        height: 64px;
+    }
+}
+
+.board__cell--clickable {
+
+    svg {
+        opacity: 0;
+        fill: none;
+    }
+
+    &:hover svg {
+        opacity: 1;
+    }
+}
+
+.mark--x {
+    color: var(--color-accent2);
+}
+
+.mark--o {
+    color: var(--color-accent1);
+}

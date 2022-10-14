@@ -1,0 +1,13 @@
+.surface {
+    border-radius: calc(15em/14);
+    background: var(--color-bg-light);
+    padding: calc(24em/14);
+    padding-bottom: calc(32em/14);
+    box-shadow: var(--color-bg-dark) 0 calc(-8em/14) 0 inset;
+
+    display: grid;
+    gap: calc(24em/14);
+
+    text-align: center;
+    text-transform: uppercase;
+}

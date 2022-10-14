@@ -1,0 +1,65 @@
+@import "./setup/index";
+
+@import "board";
+@import "button";
+@import "surface";
+@import "wrapper";
+
+html {
+    @include body;
+    background: var(--color-bg);
+    color: var(--color-fg);
+
+    height: 100%;
+}
+
+body {
+    display: grid;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+h1, .h1 { @include heading-l }
+h2, .h2 { @include heading-m }
+h3, .h3 { @include heading-s }
+h4, h5, h6, .h4, .h5, .h6 { @include heading-xs }
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+.logo {
+    display: flex;
+    width: 72px;
+    gap: 8px;
+}
+
+.switch {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background: var(--color-bg-dark);
+    padding: calc(9em/14);
+    border-radius: calc(15em/14);
+}
+
+.switch__option {
+    display: flex;
+    justify-content: center;
+    border-radius: calc(6em/14);
+    padding: calc(11em/14);
+
+    svg {
+        display: block;
+        width: 32px;
+        color: var(--color-fg);
+    }
+}
+
+.switch__option--selected {
+    background: var(--color-fg);
+
+    svg {
+        color: var(--color-bg-dark);
+    }
+}
