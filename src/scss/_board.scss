@@ -5,6 +5,11 @@
 }
 
 .board__cell {
+    border-radius: calc(15em/14);
+    background: var(--color-bg-light);
+    padding: calc(24em/14);
+    padding-bottom: calc(32em/14);
+    box-shadow: var(--color-bg-dark) 0 calc(-8em/14) 0 inset;
     aspect-ratio: 1;
 
     display: grid;
@@ -30,10 +35,26 @@
     }
 }
 
-.mark--x {
-    color: var(--color-accent2);
+.board__cell--o {
+    --accent: var(--color-accent1);
+    --accent-dark: var(--color-accent1-dark);
 }
 
-.mark--o {
-    color: var(--color-accent1);
+.board__cell--x {
+    --accent: var(--color-accent2);
+    --accent-dark: var(--color-accent2-dark);
 }
+
+.board__cell--connected {
+    background: var(--accent);
+    box-shadow: var(--accent-dark) 0 calc(-8em/14) 0 inset;
+
+    .mark {
+        color: var(--color-bg)
+    }
+}
+
+.mark {
+    color: var(--accent);
+}
+

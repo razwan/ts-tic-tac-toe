@@ -1,6 +1,7 @@
+import { useContext } from 'react';
 import { Board, Button, Logo, Surface, Switch, Wrapper } from '../index';
 
-export const App: React.FunctionComponent = ( props ) => {
+export const HomeView: React.FC = ( props ) => {
     return (
         <Wrapper>
             <Logo />
@@ -9,8 +10,16 @@ export const App: React.FunctionComponent = ( props ) => {
                 <Switch />
                 <p>Remember: X goes first</p>
             </Surface>
-            <Button isLarge>Button 1</Button>
-            <Button isLarge isSecondary>Button 1</Button>
+            <Button isLarge>New Game (vs CPU)</Button>
+            <Button isLarge isSecondary>New Game (vs Player)</Button>
+        </Wrapper>
+    );
+}
+
+export const App: React.FC = ( props ) => {
+    return (
+        <Wrapper>
+            <HomeView />
             <Board />
         </Wrapper>
     )
