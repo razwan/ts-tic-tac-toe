@@ -32,3 +32,20 @@
     --button-hover-color: var(--color-accent1-light);
     --button-shadow-color: var(--color-accent1-dark);
 }
+
+.button--secondary {
+    --button-bg-color: var(--color-accent2);
+    --button-hover-color: var(--color-accent2-light);
+    --button-shadow-color: var(--color-accent2-dark);
+}
+
+.button--tertiary {
+    --button-bg-color: var(--silver);
+    --button-hover-color: var(--silver-light);
+    --button-shadow-color: var(--silver-dark);
+}
+    
+.button-list {
+    display: flex;
+    gap: 16px;
+}

@@ -84,6 +84,15 @@ class TicTacToe {
         this._currentPlayer = this._currentPlayer === 'x' ? 'o' : 'x';
     }
 
+    public cpuMove() {
+        const emptyCells = [ 0, 1, 2 ].flatMap( rowIndex => {
+            return [ 0, 1, 2 ].map( columnIndex => [ rowIndex, columnIndex ] )
+        } ).filter( ( [ rowIndex, columnIndex ] ) => this._board[ rowIndex ][ columnIndex ] === undefined );
+
+        const randomIndex = Math.floor( Math.random() * emptyCells.length );
+        return emptyCells[ randomIndex ];
+    }
+
     get board() {
         return this._board;
     }

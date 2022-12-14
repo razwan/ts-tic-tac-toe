@@ -1,10 +1,12 @@
 import classnames from 'classnames';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { OPPONENT } from '../../store';
 import { Mark } from "../index";
 import TicTacToe from '../TicTacToe/TicTacToe';
+import { useGameStore } from '../../store';
+import { Player } from '../../types';
 
-import { useCallback, useRef, useState } from 'react';
-
-type Player = 'x' | 'o';
 type BoardSymbol = Player | undefined;
 
 type BoardCellProps = {
@@ -36,38 +38,60 @@ export const BoardCell: React.FunctionComponent<BoardCellProps> = ( props ) => {
     )
 }
 
+const useCPU = ( game: TicTacToe, callback: Function ) => {
+    const opponent = useGameStore( state => state.opponent );
+    const player1Mark = useGameStore( state => state.player1Mark );
+
+    useEffect( () => {
+        if ( opponent === OPPONENT.CPU && game.currentPlayer !== player1Mark ) {
+            const [ row, column ] = game.cpuMove();
+            game.insert( row, column );
+            callback();
+        }
+    }, [ game.currentPlayer ] )
+}
+
+const useForceUpdate = () => {
+    const [ count, setCount ] = useState( 0 );
+    return useCallback( () => setCount( ( count ) => count + 1 ), [] );
+}
+
 export const Board: React.FunctionComponent<any> = ( props ) => {
-    const game = useRef( new TicTacToe() );
-    const [ board, setBoard ] = useState( game.current.board );
-    const [ winner, setWinner ] = useState( game.current.winner );
-    const [ ended, setEnded ] = useState( game.current.ended );
-    const [ currentPlayer, setCurrentPlayer ] = useState( game.current.currentPlayer );
-    const [ connected, setConnected ] = useState( game.current.connected );
+    const game = useGameStore( state => state.game );
+    const gameState = useGameStore( state => state.gameState );
+    const endGame = useGameStore( state => state.endGame );
+    const forceUpdate = useForceUpdate();
+
+    const updateState = useCallback( () => {
+        if ( game.ended ) {
+            endGame();
+        } else {
+            forceUpdate();
+        }
+    }, [ game ] );
+
+    useCPU( game, updateState );
 
     const onCellClick = useCallback( ( row: number, column: number ) => {
         try {
-            game.current.insert( row, column );
-            setBoard( game.current.board );
-            setCurrentPlayer( game.current.currentPlayer );
-            setEnded( game.current.ended );
-            setWinner( game.current.winner );
-            setConnected( game.current.connected );
+            game.insert( row, column );
+            updateState();
         } catch( error ) {
 
         }
-    }, [] )
+    }, [ game ] )
 
     return (
         <div className={ 'board' }>
-            { board.map( ( row, rowIdx ) => row.map( ( symbol, columnIdx ) => {
-                const isClickable = ! ended && symbol === undefined;
-                const isConnected = connected && !! connected.find( ( [ x, y ] ) => x === rowIdx && y === columnIdx );
+            { game.board.map( ( row, rowIdx ) => row.map( ( symbol, columnIdx ) => {
+                const isClickable = ! game.ended && symbol === undefined;
+                const isConnected = game.connected && !! game.connected.find( ( [ x, y ] ) => x === rowIdx && y === columnIdx );
 
                 return (
                     <BoardCell 
                         key={ `${ rowIdx }-${ columnIdx }` }
                         onClick={ () => { onCellClick( rowIdx, columnIdx )} } 
-                        symbol={ symbol ?? currentPlayer }
+                        symbol={ symbol ?? game.currentPlayer }
                         isFilled={ symbol !== undefined }
                         isClickable={ isClickable } 
                         isConnected={ isConnected } 

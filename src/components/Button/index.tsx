@@ -1,23 +1,30 @@
 import classnames from 'classnames';
+import { MouseEventHandler } from 'react';
 
 type ButtonProps = {
     children?: React.ReactNode,
-    isSecondary?: boolean
-    isLarge?: boolean
+    isPrimary?: boolean,
+    isSecondary?: boolean,
+    isTertiary?: boolean,
+    isLarge?: boolean,
+    onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ( props ) => {
-    const { children, isSecondary, isLarge } = props;
+    const { children, isPrimary, isSecondary, isTertiary, isLarge } = props;
+    const onClick = props.onClick ?? (() => {});
 
     const className = classnames(
         'button',
         {
-            'button--primary': ! isSecondary,
+            'button--primary': isPrimary,
+            'button--secondary': isSecondary,
+            'button--tertiary': isTertiary,
             'button--large': isLarge,
         }
     )
 
     return (
-        <button className={ className }>{ children }</button>
+        <button className={ className } onClick={ onClick }>{ children }</button>
     )
 }

@@ -1,0 +1,45 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+
+    .button-list {
+        justify-content: center;
+    }
+}
+
+.overlay__content {
+    width: 100%;
+    padding: 45px;
+
+    display: grid;
+    gap: 16px;
+
+    background: var(--color-bg);
+    text-align: center;
+}
+
+.winner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.winner--o {
+    color: var(--color-accent1);
+}
+
+.winner--x {
+    color: var(--color-accent2);
+}
+
+.winner__mark {
+    width: 64px;
+}
