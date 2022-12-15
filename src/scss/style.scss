@@ -36,6 +36,17 @@ h1, h2, h3, h4, h5, h6, p {
     gap: 8px;
 }
 
+.logo--colored {
+    
+    > :first-child {
+        color: var(--color-accent2);
+    }
+    
+    > :last-child {
+        color: var(--color-accent1);
+    }
+}
+
 .switch {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

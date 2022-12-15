@@ -1,8 +1,18 @@
+import classnames from 'classnames'
 import { Mark } from '../index';
 
-export const Logo: React.FunctionComponent<any> = ( props ) => {
+type LogoProps = {
+    colored?: boolean
+}
+
+export const Logo: React.FC<LogoProps> = ( props ) => {
+    const className = classnames(
+        'logo',
+        { 'logo--colored': props.colored }
+    )
+
     return (
-        <div className='logo'>
+        <div className={ className }>
             <Mark mark='x' />
             <Mark mark='o' />
         </div>

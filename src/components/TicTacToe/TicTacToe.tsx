@@ -1,25 +1,28 @@
-type Mark = 'x' | 'o';
-type Cell = Mark | undefined;
-type Row = [Cell, Cell, Cell];
-type Board = [Row, Row, Row];
+// ### GENERICS
+type Cell<T> = T | undefined;
+type Row<T> = [Cell<T>, Cell<T>, Cell<T>];
+type Board<T> = [Row<T>, Row<T>, Row<T>];
+
+// ### TUPLES
 type Position = [number, number];
 type Connected = [Position, Position, Position];
 
-class TicTacToe {
-    private _board: Board;
-    private _currentPlayer: Mark;
+// ### GENERIC CLASS
+class TicTacToe<T> {
+    private _board: Board<T>;
+    private _currentPlayer: T;
     private _ended: Boolean;
-    private _winner: Mark | undefined;
+    private _winner: T | undefined;
     private _connected: Array<Position> | undefined;
 
-    constructor() {
+    constructor( private player1: T, private player2: T ) {
         this._board = [
             [ undefined, undefined, undefined ],
             [ undefined, undefined, undefined ],
             [ undefined, undefined, undefined ],
         ]
 
-        this._currentPlayer = 'x';
+        this._currentPlayer = player1;
     }
 
     private checkWin() {
@@ -81,7 +84,7 @@ class TicTacToe {
             return;
         }
 
-        this._currentPlayer = this._currentPlayer === 'x' ? 'o' : 'x';
+        this._currentPlayer = this._currentPlayer === this.player1 ? this.player2 : this.player1;
     }
 
     public cpuMove() {

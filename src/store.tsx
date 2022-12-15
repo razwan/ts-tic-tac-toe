@@ -14,9 +14,12 @@ export enum OPPONENT {
 }
 
 type GameStore = {
-    game?: TicTacToe;
+    game?: TicTacToe<Player>;
     gameState: GAME_STATE;
     player1Mark: Player;
+    player1Score: number;
+    opponentScore: number;
+    ties: number;
     opponent: OPPONENT | null;
     setPlayer1Mark: (mark: Player) => void;
     startGameVSComputer: () => void;
@@ -27,6 +30,9 @@ type GameStore = {
 
 export const useGameStore = create<GameStore>((set) => ({
     gameState: GAME_STATE.LOADING,
+    player1Score: 0,
+    opponentScore: 0,
+    ties: 0,
     player1Mark: 'x',
     opponent: null,
     setPlayer1Mark: mark => set({ player1Mark: mark }),
@@ -34,20 +40,31 @@ export const useGameStore = create<GameStore>((set) => ({
         set({ 
             gameState: GAME_STATE.RUNNING,
             opponent: OPPONENT.CPU,
-            game: new TicTacToe()
+            game: new TicTacToe<Player>( 'x', 'o' )
         })
     },
     startGameVSPlayer: () => {
         set({ 
             gameState: GAME_STATE.RUNNING,
             opponent: OPPONENT.PLAYER,
-            game: new TicTacToe()
+            game: new TicTacToe<Player>( 'x', 'o' )
         })
     },
     quitGame: () => {
         set({ gameState: GAME_STATE.LOADING })
     },
     endGame: () => {
-        set({ gameState: GAME_STATE.ENDED })
+        set( state => {
+            const hasWinner = !! state.game?.winner;
+            const gameWon = hasWinner && state.game.winner === state.player1Mark;
+            const gameLost = hasWinner && ! gameWon;
+
+            return { 
+                gameState: GAME_STATE.ENDED,
+                opponentScore: gameLost ? state.opponentScore + 1 : state.opponentScore,
+                ties: ! hasWinner ? state.ties + 1 : state.ties,
+                player1Score: gameWon ? state.player1Score + 1 : state.player1Score
+            }
+        } );
     }
 }))

@@ -4,6 +4,63 @@
     gap: calc(20em/14);
 }
 
+.board__wrapper {
+    display: grid;
+    grid-gap: 24px;
+}
+
+.board__header {
+    align-items: center;
+
+    .surface {
+        padding: calc(16em/14);
+        border-radius: calc(8em/14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+
+        .mark {
+            width: 20px;
+        }
+    }
+
+    > :last-child {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.board__header,
+.board__footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.board__footer-cell {
+    display: grid;
+    gap: 8px;
+
+    color: var(--navy-dark);
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    
+    &:nth-child(1) {
+        background-color: var(--color-accent1);
+    }
+    
+    &:nth-child(2) {
+        background-color: var(--silver);
+    }
+    
+    &:nth-child(3) {
+        background-color: var(--color-accent2);
+    }
+}
+
 .board__cell {
     border-radius: calc(15em/14);
     background: var(--color-bg-light);

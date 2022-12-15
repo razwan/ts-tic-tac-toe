@@ -9,12 +9,11 @@
     @include heading-xs;
 
     padding: calc(17em/20);
-    padding-bottom: calc(25em/20);
     border: 0;
     border-radius: calc(15em/20);
 
     background: var(--button-bg-color);
-    box-shadow: var(--button-shadow-color) 0 calc(-8em/20) inset;
+    box-shadow: var(--button-shadow-color) 0 calc(8em/20);
 
     &:hover {
         background: var(--button-hover-color);
