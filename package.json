@@ -1,4 +1,14 @@
 {
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe",
+  "scripts": {
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  },
   "devDependencies": {
     "@types/jest": "^29.2.0",
     "@types/react": "^18.0.21",
@@ -25,15 +35,5 @@
     "webpack-dev-server": "^4.11.1",
     "workbox-webpack-plugin": "^6.5.4",
     "zustand": "^4.1.5"
-  },
-  "version": "1.0.0",
-  "description": "My webpack project",
-  "name": "my-webpack-project",
-  "scripts": {
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve"
   }
 }
