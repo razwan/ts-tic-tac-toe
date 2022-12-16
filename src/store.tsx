@@ -20,6 +20,7 @@ type GameStore = {
     player1Score: number;
     opponentScore: number;
     ties: number;
+    // ### UNION TYPE
     opponent: OPPONENT | null;
     setPlayer1Mark: (mark: Player) => void;
     startGameVSComputer: () => void;
@@ -40,14 +41,14 @@ export const useGameStore = create<GameStore>((set) => ({
         set({ 
             gameState: GAME_STATE.RUNNING,
             opponent: OPPONENT.CPU,
-            game: new TicTacToe<Player>( 'x', 'o' )
+            game: new TicTacToe( 'x', 'o' )
         })
     },
     startGameVSPlayer: () => {
         set({ 
             gameState: GAME_STATE.RUNNING,
             opponent: OPPONENT.PLAYER,
-            game: new TicTacToe<Player>( 'x', 'o' )
+            game: new TicTacToe( 'x', 'o' )
         })
     },
     quitGame: () => {

@@ -7,10 +7,14 @@ import { Player } from '../../types';
 
 type BoardSymbol = Player | undefined;
 
-type BoardCellProps = {
-    symbol: BoardSymbol,
+type Clickable = {
     isClickable: boolean,
     onClick?: Function,
+}
+
+// ### INTERSECTION TYPE
+type BoardCellProps = Clickable & {
+    symbol: BoardSymbol,
     isConnected?: boolean,
     isFilled?: boolean
 }

@@ -1,3 +1,5 @@
+import { Player } from '../../types';
+
 // ### GENERICS
 type Cell<T> = T | undefined;
 type Row<T> = [Cell<T>, Cell<T>, Cell<T>];
@@ -5,7 +7,10 @@ type Board<T> = [Row<T>, Row<T>, Row<T>];
 
 // ### TUPLES
 type Position = [number, number];
-type Connected = [Position, Position, Position];
+
+// ### VARIADIC TUPLE
+// - an array with at least two elements of type T
+type Connected<T> = [T, T, ...T[]];
 
 // ### GENERIC CLASS
 class TicTacToe<T> {
@@ -41,7 +46,7 @@ class TicTacToe<T> {
             ...rows,
             ...columns,
             ...diagonals
-        ] as Array<Connected>;
+        ] as Array<Connected<Position>>;
 
         return possibilities.find( set => {
             const first = this._board[ set[0][0] ][ set[0][1] ];
