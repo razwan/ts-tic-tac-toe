@@ -1,5 +1,3 @@
-import { Player } from '../../types';
-
 // ### GENERICS
 type Cell<T> = T | undefined;
 type Row<T> = [Cell<T>, Cell<T>, Cell<T>];

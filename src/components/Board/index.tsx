@@ -19,8 +19,13 @@ type BoardCellProps = Clickable & {
     isFilled?: boolean
 }
 
+type GetSymbol<BoardCell> = BoardCell extends { symbol: infer BoardSymbol } ? BoardSymbol : never;
+type Symbol = GetSymbol<BoardCellProps>;
+
 export const BoardCell: React.FunctionComponent<BoardCellProps> = ( props ) => {
-    const { isClickable, isConnected, isFilled, symbol } = props;
+    const { isClickable, isConnected, isFilled } = props;
+    // ### CONDITIONAL TYPE
+    const symbol: Symbol = props.symbol;
     const onClick = props.onClick ?? (() => {});
 
     const className = classnames(
