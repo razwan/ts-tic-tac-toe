@@ -51,9 +51,11 @@ const useCPU = ( game: TicTacToe<Player>, callback: Function ) => {
 
     useEffect( () => {
         if ( opponent === OPPONENT.CPU && game.currentPlayer !== player1Mark ) {
-            const [ row, column ] = game.cpuMove();
-            game.insert( row, column );
-            callback();
+            (async () => {
+                const [ row, column ] = await game.cpuMove();
+                game.insert( row, column );
+                callback();
+            })();
         }
     }, [ game.currentPlayer ] )
 }

@@ -10,6 +10,19 @@ type Position = [number, number];
 // - an array with at least two elements of type T
 type Connected<T> = [T, T, ...T[]];
 
+// ### DECORATORS
+const delay = ( ms: number = 0 ): any => {
+    return function( target: any, propertyKey: string, descriptor: PropertyDescriptor ) {
+        const prevMethod = descriptor.value;
+        descriptor.value = async function( ...args: any[] ) {
+            return await new Promise( resolve => setTimeout( () => {
+                resolve( prevMethod.apply( this, args ) );
+            }, ms ) );
+        };
+        return descriptor;
+    };
+}
+
 // ### GENERIC CLASS
 class TicTacToe<T> {
     private _board: Board<T>;
@@ -90,6 +103,7 @@ class TicTacToe<T> {
         this._currentPlayer = this._currentPlayer === this.player1 ? this.player2 : this.player1;
     }
 
+    @delay( 1000 )
     public cpuMove() {
         const emptyCells = [ 0, 1, 2 ].flatMap( rowIndex => {
             return [ 0, 1, 2 ].map( columnIndex => [ rowIndex, columnIndex ] )

@@ -6,7 +6,8 @@
     "target": "es5",
     "jsx": "react-jsx",
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
   },
   "files": ["src/index.tsx"]
 }
