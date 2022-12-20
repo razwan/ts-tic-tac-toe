@@ -1,71 +1,12 @@
-import classnames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
-import { Mark } from '../index';
+import { useCallback } from 'react';
+
 import { OPPONENT, useGameStore } from '../../store';
-import TicTacToe from '../TicTacToe/TicTacToe';
-import { Player } from '../../types';
 
+import { BoardHeader } from './BoardHeader';
+import { BoardCell } from './BoardCell';
 import { BoardFooter } from './BoardFooter';
-
-type BoardSymbol = Player | undefined;
-
-type Clickable = {
-    isClickable: boolean,
-    onClick?: Function,
-}
-
-// ### INTERSECTION TYPE
-type BoardCellProps = Clickable & {
-    symbol: BoardSymbol,
-    isConnected?: boolean,
-    isFilled?: boolean
-}
-
-type GetSymbol<BoardCell> = BoardCell extends { symbol: infer BoardSymbol } ? BoardSymbol : never;
-type Symbol = GetSymbol<BoardCellProps>;
-
-export const BoardCell: React.FunctionComponent<BoardCellProps> = ( props ) => {
-    const { isClickable, isConnected, isFilled } = props;
-    // ### CONDITIONAL TYPE
-    const symbol: Symbol = props.symbol;
-    const onClick = props.onClick ?? (() => {});
-
-    const className = classnames(
-        'board__cell',
-        {
-            'board__cell--x': symbol === 'x',
-            'board__cell--o': symbol === 'o',
-            'board__cell--clickable': isClickable,
-            'board__cell--connected': isConnected
-        }
-    );
-    
-    return (
-        <div className={ className } onClick={ () => { onClick() } }>
-            { ( isFilled || isClickable ) && <Mark mark={ symbol } /> }
-        </div>
-    )
-}
-
-const useCPU = ( game: TicTacToe<Player>, callback: Function ) => {
-    const opponent = useGameStore( state => state.opponent );
-    const player1Mark = useGameStore( state => state.player1Mark );
-
-    useEffect( () => {
-        if ( opponent === OPPONENT.CPU && game.currentPlayer !== player1Mark ) {
-            (async () => {
-                const [ row, column ] = await game.cpuMove();
-                game.insert( row, column );
-                callback();
-            })();
-        }
-    }, [ game.currentPlayer ] )
-}
-
-const useForceUpdate = () => {
-    const [ count, setCount ] = useState( 0 );
-    return useCallback( () => setCount( ( count ) => count + 1 ), [] );
-}
+import { useCPU } from './useCPU';
+import { useForceUpdate } from './useForceUpdate';
 
 export const Board: React.FC = () => {
     const game = useGameStore( state => state.game );
@@ -95,7 +36,7 @@ export const Board: React.FC = () => {
 
     return (
         <div className="board__wrapper">
-
+            <BoardHeader />
             <div className={ 'board' }>
                 { game.board.map( ( row, rowIdx ) => row.map( ( symbol, columnIdx ) => {
                     const isEmpty = symbol === undefined;
