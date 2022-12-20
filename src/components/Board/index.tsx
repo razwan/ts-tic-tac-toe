@@ -1,9 +1,11 @@
 import classnames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Logo, Mark } from '../index';
+import { Mark } from '../index';
 import { OPPONENT, useGameStore } from '../../store';
 import TicTacToe from '../TicTacToe/TicTacToe';
 import { Player } from '../../types';
+
+import { BoardFooter } from './BoardFooter';
 
 type BoardSymbol = Player | undefined;
 
@@ -117,56 +119,4 @@ export const Board: React.FC = () => {
             <BoardFooter />
         </div>
     );
-}
-
-const BoardHeader: React.FC = () => {
-    const currentPlayer = useGameStore( state => state.game.currentPlayer );
-    const restartGame = useGameStore( state => state.opponent === OPPONENT.CPU ? state.startGameVSComputer : state.startGameVSPlayer );
-
-    return (
-        <div className="board__header">
-            <div>
-                <Logo colored />
-            </div>
-            <div>
-                <div className="surface">
-                    <Mark mark={ currentPlayer } />
-                    <h4>Turn</h4>
-                </div>
-            </div>
-            <div>
-                <Button isTertiary onClick={ () => { restartGame() } }>Restart</Button>
-            </div>
-        </div>
-    )
-}
-
-const BoardFooter: React.FC = () => {
-    const player1Mark = useGameStore( state => state.player1Mark );
-    const player1Score = useGameStore( state => state.player1Score );
-    const opponentScore = useGameStore( state => state.opponentScore );
-    const ties = useGameStore( state => state.ties );
-
-    const opponentLabel = useGameStore( state => state.opponent === OPPONENT.CPU ? 'CPU' : 'P2' );
-    const XLabel = player1Mark === 'x' ? 'YOU' : opponentLabel;
-    const XScore = player1Mark === 'x' ? player1Score : opponentScore;
-    const OLabel = player1Mark === 'o' ? 'YOU' : opponentLabel;
-    const OScore = player1Mark === 'o' ? player1Score : opponentScore;
-
-    return (
-        <div className="board__footer">
-            <div className="board__footer-cell">
-                <p>{ `X (${ XLabel })` }</p>
-                <h2>{ XScore }</h2>
-            </div>
-            <div className="board__footer-cell">
-                <p>Ties</p>
-                <h2>{ ties }</h2>
-            </div>
-            <div className="board__footer-cell">
-                <p>{ `O (${ OLabel })` }</p>
-                <h2>{ OScore }</h2>
-            </div>
-        </div>
-    )
 }
