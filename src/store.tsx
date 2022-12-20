@@ -1,4 +1,6 @@
-import create from 'zustand'
+import create from 'zustand';
+import createStore from 'zustand/vanilla';
+
 import TicTacToe from './components/TicTacToe/TicTacToe';
 import type { Player } from './types';
 

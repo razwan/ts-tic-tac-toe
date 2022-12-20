@@ -1,3 +1,5 @@
+import { loadingStore } from "../Loader";
+
 // ### GENERICS
 type Cell<T> = T | undefined;
 type Row<T> = [Cell<T>, Cell<T>, Cell<T>];
@@ -15,7 +17,9 @@ const delay = ( ms: number = 0 ): any => {
     return function( target: any, propertyKey: string, descriptor: PropertyDescriptor ) {
         const prevMethod = descriptor.value;
         descriptor.value = async function( ...args: any[] ) {
+            loadingStore.setState( { loading: true } );
             return await new Promise( resolve => setTimeout( () => {
+                loadingStore.setState( { loading: false } );
                 resolve( prevMethod.apply( this, args ) );
             }, ms ) );
         };

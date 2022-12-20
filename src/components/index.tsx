@@ -1,10 +1,12 @@
 export { App } from './App';
 export { Board } from './Board';
 export { Button } from './Button';
+export { GameEndedOverlay } from './GameEndedOverlay';
+export { HomeView } from './HomeView';
+export { Loader } from './Loader';
 export { Logo } from './Logo';
 export { Mark } from './Mark';
 export { Overlay } from './Overlay';
-export { GameEndedOverlay } from './GameEndedOverlay';
-export { Wrapper } from './Wrapper';
 export { Surface } from './Surface';
 export { Switch } from './Switch';
+export { Wrapper } from './Wrapper';
