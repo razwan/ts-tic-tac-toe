@@ -68,9 +68,9 @@ const useForceUpdate = () => {
 export const Board: React.FC = () => {
     const game = useGameStore( state => state.game );
     const endGame = useGameStore( state => state.endGame );
-    const restartGame = useGameStore( state => state.opponent === OPPONENT.CPU ? state.startGameVSComputer : state.startGameVSPlayer );
+    const playingVSComputer = useGameStore( state => state.opponent === OPPONENT.CPU );
+    const player1Mark = useGameStore( state => state.player1Mark );
     const forceUpdate = useForceUpdate();
-    const currentPlayer = useGameStore( state => state.game.currentPlayer );
 
     const updateState = useCallback( () => {
         if ( game.ended ) {
@@ -93,33 +93,23 @@ export const Board: React.FC = () => {
 
     return (
         <div className="board__wrapper">
-            <div className="board__header">
-                <div>
-                    <Logo colored />
-                </div>
-                <div>
-                    <div className="surface">
-                        <Mark mark={ currentPlayer } />
-                        <h4>Turn</h4>
-                    </div>
-                </div>
-                <div>
-                    <Button isTertiary onClick={ () => { restartGame() } }>Restart</Button>
-                </div>
-            </div>
+
             <div className={ 'board' }>
                 { game.board.map( ( row, rowIdx ) => row.map( ( symbol, columnIdx ) => {
-                    const isClickable = ! game.ended && symbol === undefined;
+                    const isEmpty = symbol === undefined;
+                    const isPlayerTurn = ! playingVSComputer || game.currentPlayer === player1Mark;
+                    const isClickable = ! game.ended && isEmpty && isPlayerTurn;
                     const isConnected = game.connected && !! game.connected.find( ( [ x, y ] ) => x === rowIdx && y === columnIdx );
+                    const onClick = isPlayerTurn ? () => { onCellClick( rowIdx, columnIdx ) } : undefined;
                     
                     return (
                         <BoardCell 
-                        key={ `${ rowIdx }-${ columnIdx }` }
-                        onClick={ () => { onCellClick( rowIdx, columnIdx )} } 
-                        symbol={ symbol ?? game.currentPlayer }
-                        isFilled={ symbol !== undefined }
-                        isClickable={ isClickable } 
-                        isConnected={ isConnected } 
+                            key={ `${ rowIdx }-${ columnIdx }` }
+                            onClick={ onClick }
+                            symbol={ symbol ?? game.currentPlayer }
+                            isFilled={ symbol !== undefined }
+                            isClickable={ isClickable } 
+                            isConnected={ isConnected } 
                         />
                         ) 
                     } ) ) }
@@ -127,6 +117,28 @@ export const Board: React.FC = () => {
             <BoardFooter />
         </div>
     );
+}
+
+const BoardHeader: React.FC = () => {
+    const currentPlayer = useGameStore( state => state.game.currentPlayer );
+    const restartGame = useGameStore( state => state.opponent === OPPONENT.CPU ? state.startGameVSComputer : state.startGameVSPlayer );
+
+    return (
+        <div className="board__header">
+            <div>
+                <Logo colored />
+            </div>
+            <div>
+                <div className="surface">
+                    <Mark mark={ currentPlayer } />
+                    <h4>Turn</h4>
+                </div>
+            </div>
+            <div>
+                <Button isTertiary onClick={ () => { restartGame() } }>Restart</Button>
+            </div>
+        </div>
+    )
 }
 
 const BoardFooter: React.FC = () => {

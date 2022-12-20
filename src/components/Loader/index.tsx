@@ -1,5 +1,6 @@
 import React, { createContext, Component } from 'react';
 import { createStore } from 'zustand';
+import { Overlay } from '../';
 
 type LoadingStore = {
     loading: boolean;
@@ -49,7 +50,9 @@ class Loader extends Component<LoaderProps> {
     render() {
 
        return (
-            <div>Loading...</div>
+            <Overlay show={ true }>
+                <h1>Thinking...</h1>
+            </Overlay>
        )
     }
 }
